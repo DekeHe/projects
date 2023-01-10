@@ -1,0 +1,102 @@
+<div 
+class="container rounded bg-white mt-5 mb-5
+">
+  <div class="row">
+    <div class="col-md-3  border-right">
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+        <img class="rounded-circle mt-5" width="150px" src="/profilepic/{{id}}"
+          onerror="this.src='/public/image/default-user.jpeg'" alt="Profile Picture">
+        <span class="font-weight-bold">{{firstname}} {{lastname}}</span>
+        <span class="text-black-50">{{email}}</span>
+        <div class="col-md-12">
+          <form action="/upload/profilepic" enctype="multipart/form-data" method="POST">
+            <label for="picture" class="labels">Change profile image</label>
+            <input type="file" name="picture" accept="image/*" class="btn  bottom-padding" required />
+            <input type="submit" class="btn-private btn btn-primary" value="Upload Photo" />
+          </form>
+        </div>
+        <span class="py-3"><a class="btn btn-primary" href="/logout">Logout</a></span>
+        <span class="py-3"> <a href="/delete" class="btn btn-danger">Delete Account</a></span>
+      </div>
+    </div>
+    <div class="col-md-4 border-right">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">Profile Settings</h4>
+        </div>
+        <form id="signup-form" action="/update" method="POST">
+          <div class="row mt-2">
+            <div class="col-md-6"><label class="labels">First Name</label><input type="text" class="form-control"
+                id="firstname" name="firstname" placeholder="Your first name" value="{{firstname}}"></div>
+            <div class="col-md-6"><label class="labels">Last Name</label><input type="text" class="form-control"
+                id="lastname" name="lastname" value="{{lastname}}" placeholder="Your last name"></div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-md-12 bottom-padding"><label class="labels">Email</label><input type="text"
+                class="form-control" id="email" name="email" placeholder="Enter your Email" value="{{email}}"></div>
+            <div class="col-md-12 bottom-padding"><label class="labels">Username</label><input type="text"
+                class="form-control" id="username" name="username" placeholder="Enter your Username"
+                value="{{username}}">
+            </div>
+            <div class="col-md-12 bottom-padding"><label class="labels">Password</label><input type="password"
+                class="form-control" id="password" name="password" placeholder="Enter your Password">
+              <small class="form-text text-muted">Write your existing password or new password to
+                update.</small>
+            </div>
+            <div class="col-md-12 bottom-padding"><label class="labels">Age</label><input type="number"
+                class="form-control" id="age" name="age" placeholder="Enter your Age" value="{{age}}"></div>
+          </div>
+          {{#if errorcode}}
+          <p class="error">{{message}}</p>
+          {{/if}}
+          <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="submit"
+              id="btn-id-private">Save Profile</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="p-3 py-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">Reviews by you</h4>
+        </div>
+        {{#each this.getReviews}}
+        <h6>{{this.restaurantId}}</h6>
+        <ul>
+          <li>Review: {{this.reviewText}}</li>
+          <li>Rating: {{this.rating}}</li>
+        </ul>
+        {{/each}}<br>
+        
+        <div class="">
+          <h4 class="text-right">cart by you:</h4>
+        </div>
+        {{!-- {{cart}} --}}
+        <table>
+          <tr>
+            <th> name</th><th>  address </th><th>dish </th> <th>count</th>
+          </tr> 
+           {{#each cart}}
+           <tr>
+           <td>{{this.restaurantname}}</td>
+           <td>{{this.restaurantaddress}}</td><td>{{this.dishname}}</td>
+           <td>{{this.count}}</td>
+          {{!-- <ul> 
+            <li> {{this.restaurantname}}</li>
+            <li></li>
+            <li>address: </li>
+            <li>dishname:{{this.dishname}}</li>
+            <li>count: {{this.count}}</li>
+          </ul> --}}
+           </tr>
+           
+          
+        {{/each}}
+
+        </table>
+      
+      </div>
+    </div>
+  </div>
+</div>
